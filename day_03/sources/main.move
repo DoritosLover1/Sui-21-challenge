@@ -15,11 +15,24 @@ module challenge::day_03 {
     // public struct Habit has copy, drop {
     //     // Your fields here
     // }
+    public struct Habit has copy, drop {
+        id: UID,
+        name: String,
+        status: bool,
+    }
 
     // TODO: Write a constructor function 'new_habit'
     // that takes a name (vector<u8>) and returns a Habit
     // public fun new_habit(name: vector<u8>): Habit {
     //     // Your code here
     // }
+
+    public fun new_habit(name: String, status: bool){
+        let habit = Habit {
+            id: object::new(ctx),
+            name,
+            status
+        }
+    }
 }
 
