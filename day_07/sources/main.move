@@ -53,7 +53,7 @@ module challenge::day_07 {
 
     // Note: assert! is a built-in macro in Move 2024 - no import needed!
 
-    // TODO: Write a test 'test_add_habits' that:
+    // TODO: ++ Write a test 'test_add_habits' that:
     // - Creates an empty list
     // - Adds 1-2 habits
     // - Checks that the list length is correct
@@ -62,8 +62,18 @@ module challenge::day_07 {
     //     // Your code here
     //     // Use b"Exercise".to_string() to create a String
     // }
+    #[test]
+    fun test_add_habits() {
+        let mut list= empty_list();
+        let habit = make_habit("First Habit");
+        let habit2 = make_habit("Second Habit");
+        add_habit(&mut list, habit);
+        add_habit(&mut list, habit2);
+        let length_of_list = vector::length(&list.habits);
+        assert!(length_of_list == 2, 0);
+    }
 
-    // TODO: Write a test 'test_complete_habit' that:
+    // TODO: ++ Write a test 'test_complete_habit' that:
     // - Creates a list and adds a habit
     // - Completes the habit
     // - Checks that completed == true
@@ -71,5 +81,22 @@ module challenge::day_07 {
     // fun test_complete_habit() {
     //     // Your code here
     // }
+
+    #[test]
+    fun test_complete_habit() {
+        let mut list= empty_list();
+        let habit = make_habit("First Habit");
+        let habit2 = make_habit("Second Habit");
+        add_habit(&mut list, habit);
+        add_habit(&mut list, habit2);
+
+        complete_habit(&mut list, 0);
+        complete_habit(&mut list, 1);
+
+        let is_first_completed = vector::borrow(&list.habits, 0);
+        let is_second_completed = vector::borrow(&list.habits, 1);
+
+        assert!(is_first_completed.completed == is_second_completed.completed == true, 0);
+    }
 }
 
