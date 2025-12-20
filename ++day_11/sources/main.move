@@ -37,7 +37,7 @@ module challenge::day_11 {
         task.status = TaskStatus::Completed;
     }
 
-    // TODO: Define a struct called 'TaskBoard' with:
+    // TODO: ++ Define a struct called 'TaskBoard' with:
     // - owner: address (the address that owns this board)
     // - tasks: vector<Task>
     // Add 'drop' ability
@@ -45,18 +45,34 @@ module challenge::day_11 {
     //     // Your fields here
     // }
 
-    // TODO: Write a constructor 'new_board' that takes owner: address
+    public struct TaskBoard has drop {
+        owner: address,
+        tasks: vector<Task>
+    }
+
+    // TODO: ++ Write a constructor 'new_board' that takes owner: address
     // and returns an empty TaskBoard
     // public fun new_board(owner: address): TaskBoard {
     //     // Your code here
     // }
 
-    // TODO: Write a function 'add_task' that:
+    public fun new_board(owner: address): TaskBoard {
+        TaskBoard {
+            owner,
+            tasks: vector::empty(),
+        }
+    }
+
+    // TODO: ++ Write a function 'add_task' that:
     // - Takes board: &mut TaskBoard and task: Task
     // - Adds the task to the board's vector
     // The task becomes part of the board's data
     // public fun add_task(board: &mut TaskBoard, task: Task) {
     //     // Your code here
     // }
+
+    public fun add_task(board: &mut TaskBoard, task: Task) {
+        vector::push_back(&mut board.tasks, task);
+    }
 }
 
