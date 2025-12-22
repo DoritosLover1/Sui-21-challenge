@@ -9,14 +9,14 @@
 /// We'll add UID and make it an object tomorrow.
 
 module challenge::day_15 {
-    // TODO: Define constants for plotId validation
-    // const MAX_PLOTS: u64 = 20;
-    // const E_PLOT_NOT_FOUND: u64 = 1;
-    // const E_PLOT_LIMIT_EXCEEDED: u64 = 2;
-    // const E_INVALID_PLOT_ID: u64 = 3;
-    // const E_PLOT_ALREADY_EXISTS: u64 = 4;
+    // TODO: ++ Define constants for plotId validation
+    const MAX_PLOTS: u64 = 20;
+    const E_PLOT_NOT_FOUND: u64 = 1;
+    const E_PLOT_LIMIT_EXCEEDED: u64 = 2;
+    const E_INVALID_PLOT_ID: u64 = 3;
+    const E_PLOT_ALREADY_EXISTS: u64 = 4;
 
-    // TODO: Define a struct called 'FarmCounters' with:
+    // TODO: ++ Define a struct called 'FarmCounters' with:
     // - planted: u64
     // - harvested: u64
     // - plots: vector<u8>
@@ -25,17 +25,37 @@ module challenge::day_15 {
     // public struct FarmCounters has copy, drop, store {
     //     // Your fields here
     // }
+    public struct FarmCounters has copy, drop, store {
+        planted: u64,
+        harvested: u64,
+        plots: vector<u8>
+    }
 
-    // TODO: Write a constructor 'new_counters' that returns counters with zeros
+    // TODO: ++ Write a constructor 'new_counters' that returns counters with zeros
     // fun new_counters(): FarmCounters {
     //     // Your code here (include plots: vector::empty())
     // }
+
+    fun new_counters(): FarmCounters {
+        FarmCounters{
+            planted: 0,
+            harvested: 0,
+            plots: vector::empty()
+        }
+    }
 
     // TODO: Write a function 'plant' that takes plotId: u8 and increments planted counter
     // fun plant(counters: &mut FarmCounters, plotId: u8) {
     //     // Your code here
     //     // Validate plotId, check limits, prevent duplicates
     // }
+
+    fun plant(counters: &mut FarmCounters, plotId: u8) {
+        assert!(plotId >= 1 && plotId <= (MAX_PLOTS as u8), E_INVALID_PLOT_ID);
+
+        let count = vector::length(&counters.plots);
+        assert!(count < (MAX_PLOTS as u8), E_PLOT_ALREADY_EXISTS); 
+    }
 
     // TODO: Write a function 'harvest' that takes plotId: u8 and increments harvested counter
     // fun harvest(counters: &mut FarmCounters, plotId: u8) {
